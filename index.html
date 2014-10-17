@@ -5,51 +5,107 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>What Beer Today?</title>
+      <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <style type="text/css">
-    html{
-		background: linear-gradient(270deg, #38177b, #5200f9, #0089f9);
-		background-size: 600% 600%;
-
-		-webkit-animation: bggrad 30s ease infinite;
-		-z-animation: bggrad 30s ease infinite;
-		-o-animation: bggrad 30s ease infinite;
-		animation: bggrad 30s ease infinite;
-
-		@-webkit-keyframes bggrad {
-		    0%{background-position:0% 50%}
-		    50%{background-position:100% 50%}
-		    100%{background-position:0% 50%}
-		}
-		@-moz-keyframes bggrad {
-		    0%{background-position:0% 50%}
-		    50%{background-position:100% 50%}
-		    100%{background-position:0% 50%}
-		}
-		@-o-keyframes bggrad {
-		    0%{background-position:0% 50%}
-		    50%{background-position:100% 50%}
-		    100%{background-position:0% 50%}
-		}
-		@keyframes bggrad { 
-		    0%{background-position:0% 50%}
-		    50%{background-position:100% 50%}
-		    100%{background-position:0% 50%}
-		}
-    }
     h1{
 		text-align: center;
-		font: bold 8em/1em "helvetica neue",helvetica, sans-serif;
-		letter-spacing: -0.05em;
-		color: white;
+		font: 8em/1em 'Indie Flower', cursive;
     }
     </style>
+    <script>
+
+        (function(){
+            /**
+             * Beer constructor
+             * @constructor
+             */
+            var Beer = function(){
+                this.types = [
+                    "Altbier",
+                    "Düsseldorf Altbier",
+                    "Amber ale",
+                    "Barley wine",
+                    "American Barleywine",
+                    "Berliner weisse",
+                    "Bière de Garde",
+                    "Bitter",
+                    "Blonde Ale",
+                    "Bock",
+                    "Brown ale",
+                    "American Brown Ale",
+                    "California Common",
+                    "Cream Ale",
+                    "Dortmunder Export",
+                    "Doppelbock",
+                    "Dunkel",
+                    "Dunkelweizen",
+                    "Eisbock",
+                    "Fruit lambic",
+                    "Golden Ale",
+                    "Gose",
+                    "Gueuze",
+                    "Hefeweizen",
+                    "Helles",
+                    "India pale ale",
+                    "American IPA",
+                    "Imperial IPA",
+                    "Kölsch",
+                    "Lambic",
+                    "Light ale",
+                    "Maibock",
+                    "Helles bock",
+                    "Malt liquor",
+                    "Mild",
+                    "Oktoberfestbier",
+                    "Märzenbier",
+                    "Old ale",
+                    "Oud bruin",
+                    "Pale ale",
+                    "Pilsener/Pilsner/Pils",
+                    "Bohemian Pilsener",
+                    "Classic American Pilsner",
+                    "Porter",
+                    "Red ale",
+                    "Roggenbier",
+                    "Saison",
+                    "Scotch ale",
+                    "Steam beer",
+                    "Stout",
+                    "Oatmeal Stout",
+                    "Foreign Extra Stout",
+                    "American Stout",
+                    "Russian Imperial Stout"
+                ];
+
+                this.type = this.types[(Math.random() * (this.types.length - 0) + 0).toFixed()];
+
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+
+                document.cookie = "beerType=" + this.type + "; expires=" + tomorrow +" GMT; path=/";
+            };
+
+            Beer.prototype.pour = function(){
+                return this.type;
+            };
+
+            document.addEventListener('DOMContentLoaded', function(){
+                var hero = document.getElementById('beer');
+                this.beerCookie = document.cookie.replace(/(?:(?:^|.*;\s*)beerType\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+                if(this.beerCookie){
+                    hero.innerHTML = this.beerCookie;
+                } else {
+                    var todaysBeer = new Beer();
+                    hero.innerHTML = todaysBeer.pour();
+                }
+            });
+        })()
+
+    </script>
 
 
   </head>
   <body>
-  <div class="container">
-  	<h1>Herb and spiced beer</h1>
-  </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  	<h1 id="beer"></h1>
   </body>
 </html>
