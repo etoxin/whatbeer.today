@@ -5,13 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>What Beer Today?</title>
-      <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <style type="text/css">
     h1{
-		text-align: center;
-		font: 8em/1em 'Indie Flower', cursive;
+        font: 5em/1em sans-serif;
     }
     </style>
+      <script src="/shake.js"></script>
     <script>
 
         (function(){
@@ -99,6 +98,14 @@
                     hero.innerHTML = todaysBeer.pour();
                 }
             });
+
+            window.addEventListener('shake', shakeEventDidOccur, false);
+            function shakeEventDidOccur () {
+                var hero = document.getElementById('beer');
+                alert('yes');
+                var todaysBeer = new Beer();
+                hero.innerHTML = todaysBeer.pour();
+            }
         })()
 
     </script>
