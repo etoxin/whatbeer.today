@@ -10,109 +10,148 @@
         font: 5em/1em sans-serif;
     }
     </style>
-      <script src="/shake.js"></script>
+  </head>
+  <body>
+  	<h1 id="beer"></h1>
+    <h2 id="description"></h2>
     <script>
 
         (function(){
+            "use strict";
             /**
              * Beer constructor
              * @constructor
              */
             var Beer = function(){
-                this.types = [
-                    "Altbier",
-                    "Düsseldorf Altbier",
-                    "Amber ale",
-                    "Barley wine",
-                    "American Barleywine",
-                    "Berliner weisse",
-                    "Bière de Garde",
-                    "Bitter",
-                    "Blonde Ale",
-                    "Bock",
-                    "Brown ale",
-                    "American Brown Ale",
-                    "California Common",
-                    "Cream Ale",
-                    "Dortmunder Export",
-                    "Doppelbock",
-                    "Dunkel",
-                    "Dunkelweizen",
-                    "Eisbock",
-                    "Fruit lambic",
-                    "Golden Ale",
-                    "Gose",
-                    "Gueuze",
-                    "Hefeweizen",
-                    "Helles",
-                    "India pale ale",
-                    "American IPA",
-                    "Imperial IPA",
-                    "Kölsch",
-                    "Lambic",
-                    "Light ale",
-                    "Maibock",
-                    "Helles bock",
-                    "Malt liquor",
-                    "Mild",
-                    "Oktoberfestbier",
-                    "Märzenbier",
-                    "Old ale",
-                    "Oud bruin",
-                    "Pale ale",
-                    "Pilsener/Pilsner/Pils",
-                    "Bohemian Pilsener",
-                    "Classic American Pilsner",
-                    "Porter",
-                    "Red ale",
-                    "Roggenbier",
-                    "Saison",
-                    "Scotch ale",
-                    "Steam beer",
-                    "Stout",
-                    "Oatmeal Stout",
-                    "Foreign Extra Stout",
-                    "American Stout",
-                    "Russian Imperial Stout"
+                this.beerList = [
+                    {name: "Altbier", description: "yo."},
+                    {name: "Düsseldorf Altbier", description: "yeah."},
+                    {name: "Amber ale", description: "yup."},
+                    {name: "Barley wine", description: ""},
+                    {name: "American Barleywine", description: ""},
+                    {name: "Berliner weisse", description: ""},
+                    {name: "Bière de Garde", description: ""},
+                    {name: "Bitter", description: ""},
+                    {name: "Blonde Ale", description: ""},
+                    {name: "Bock", description: ""},
+                    {name: "Brown ale", description: ""},
+                    {name: "American Brown Ale", description: ""},
+                    {name: "California Common", description: ""},
+                    {name: "Cream Ale", description: ""},
+                    {name: "Dortmunder Export", description: ""},
+                    {name: "Doppelbock", description: ""},
+                    {name: "Dunkel", description: ""},
+                    {name: "Dunkelweizen", description: ""},
+                    {name: "Eisbock", description: ""},
+                    {name: "Fruit lambic", description: ""},
+                    {name: "Golden Ale", description: ""},
+                    {name: "Gose", description: ""},
+                    {name: "Gueuze", description: ""},
+                    {name: "Hefeweizen", description: ""},
+                    {name: "Helles", description: ""},
+                    {name: "India pale ale", description: ""},
+                    {name: "American IPA", description: ""},
+                    {name: "Imperial IPA", description: ""},
+                    {name: "Kölsch", description: ""},
+                    {name: "Lambic", description: ""},
+                    {name: "Light ale", description: ""},
+                    {name: "Maibock", description: ""},
+                    {name: "Helles bock", description: ""},
+                    {name: "Malt liquor", description: ""},
+                    {name: "Mild", description: ""},
+                    {name: "Oktoberfestbier", description: ""},
+                    {name: "Märzenbier", description: ""},
+                    {name: "Old ale", description: ""},
+                    {name: "Oud bruin", description: ""},
+                    {name: "Pale ale", description: ""},
+                    {name: "Pilsener/Pilsner/Pils", description: ""},
+                    {name: "Bohemian Pilsener", description: ""},
+                    {name: "Classic American Pilsner", description: ""},
+                    {name: "Porter", description: ""},
+                    {name: "Red ale", description: ""},
+                    {name: "Roggenbier", description: ""},
+                    {name: "Saison", description: ""},
+                    {name: "Scotch ale", description: ""},
+                    {name: "Steam beer", description: ""},
+                    {name: "Stout", description: ""},
+                    {name: "Oatmeal Stout", description: ""},
+                    {name: "Foreign Extra Stout", description: ""},
+                    {name: "American Stout", description: ""},
+                    {name: "Russian Imperial Stout", description: ""}
                 ];
 
-                this.type = this.types[(Math.random() * (this.types.length - 0) + 0).toFixed()];
+                /**
+                 * We choose a random beer from the beer list.
+                 */
+                this.beerSelection = this.beerList[ (Math.random() * (this.beerList.length - 0) + 0).toFixed() ];
 
+                /**
+                 * We create tomorrows date for the cookie.
+                 * @type {Date}
+                 */
                 var tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
 
-                document.cookie = "beerType=" + this.type + "; expires=" + tomorrow +" GMT; path=/";
+                /**
+                 * We set the cookie so that this beer selection is only for the day.
+                 * @type {string}
+                 */
+                document.cookie = "beerName=" + this.beerSelection.name + "; expires=" + tomorrow +" GMT; path=/";
+                document.cookie = "beerDescription=" + this.beerSelection.description + "; expires=" + tomorrow +" GMT; path=/";
             };
 
-            Beer.prototype.pour = function(){
-                return this.type;
+            /**
+             * We create a function to get the name
+             * @returns {String}
+             */
+            Beer.prototype.beerName = function(){
+                return this.beerSelection.name;
             };
 
-            document.addEventListener('DOMContentLoaded', function(){
-                var hero = document.getElementById('beer');
-                this.beerCookie = document.cookie.replace(/(?:(?:^|.*;\s*)beerType\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-                if(this.beerCookie){
-                    hero.innerHTML = this.beerCookie;
-                } else {
-                    var todaysBeer = new Beer();
-                    hero.innerHTML = todaysBeer.pour();
-                }
-            });
+            /**
+             * We create a function to get the description.
+             * @returns {string}
+             */
+            Beer.prototype.beerDescription = function(){
+                return this.beerSelection.description;
+            };
 
-            window.addEventListener('shake', shakeEventDidOccur, false);
-            function shakeEventDidOccur () {
-                var hero = document.getElementById('beer');
-                alert('yes');
+            /**
+             * @type {HTMLElement}
+             */
+            var beerHeroName = document.getElementById('beer');
+
+            /**
+             * @type {HTMLElement}
+             */
+            var beerHeroDescription = document.getElementById('description');
+
+            /**
+             * @type {string}
+             */
+            var beerCookieName = document.cookie.replace(/(?:(?:^|.*;\s*)beerName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+            /**
+             * @type {string}
+             */
+            var beerCookieDescription = document.cookie.replace(/(?:(?:^|.*;\s*)beerDescription\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+            /**
+             * check for a cookie before creating a new selection.
+             */
+            if(beerCookieName){
+                beerHeroName.innerHTML = beerCookieName;
+                beerHeroDescription.innerHTML = beerCookieDescription;
+            } else {
+                /**
+                 * New Beer.
+                 * @type {Beer}
+                 */
                 var todaysBeer = new Beer();
-                hero.innerHTML = todaysBeer.pour();
+                beerHeroName.innerHTML = todaysBeer.beerName();
+                beerHeroDescription.innerHTML = todaysBeer.beerDescription();
             }
-        })()
-
+        })();
     </script>
-
-
-  </head>
-  <body>
-  	<h1 id="beer"></h1>
   </body>
 </html>
