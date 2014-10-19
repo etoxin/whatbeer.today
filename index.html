@@ -5,15 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>What Beer Today?</title>
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
     <style type="text/css">
-    h1{
-        font: 5em/1em sans-serif;
-    }
+        html {
+            background: rgb(249, 249, 249);
+        }
+
+        body {
+            color: rgb(33, 33, 33);
+        }
+
+        h1 {
+            font: 4em/1em 'Poiret One', cursive;
+            margin: 0;
+        }
+
+        h2 {
+            font: 1.5em/1.5em 'Oswald', sans-serif;
+        }
+
+        a {
+            display: block;
+            color: rgb(33, 33, 33);
+            text-decoration: none;
+            font: 1.3em sans-serif;
+            text-align: center;
+            border: solid rgb(33, 33, 33) 1px;
+            border-radius: 5px;
+            padding: 17px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 50px;
+        }
+
+        p {
+            font: 1em sans-serif;
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+        }
     </style>
   </head>
   <body>
-  	<h1 id="beer"></h1>
-    <h2 id="description"></h2>
+    <div class="container">
+      <h1 id="beer"></h1>
+      <h2 id="description"></h2>
+      <a id="tryAgain" href="#">Not Today.</a>
+      <p id="shake"></p>
+    </div>
     <script>
 
         (function(){
@@ -23,61 +64,59 @@
              * @constructor
              */
             var Beer = function(){
+                // todo: add descriptions http://en.wikipedia.org/wiki/List_of_beer_styles
                 this.beerList = [
-                    {name: "Altbier", description: "yo."},
-                    {name: "Düsseldorf Altbier", description: "yeah."},
-                    {name: "Amber ale", description: "yup."},
-                    {name: "Barley wine", description: ""},
-                    {name: "American Barleywine", description: ""},
-                    {name: "Berliner weisse", description: ""},
-                    {name: "Bière de Garde", description: ""},
-                    {name: "Bitter", description: ""},
-                    {name: "Blonde Ale", description: ""},
-                    {name: "Bock", description: ""},
-                    {name: "Brown ale", description: ""},
-                    {name: "American Brown Ale", description: ""},
-                    {name: "California Common", description: ""},
-                    {name: "Cream Ale", description: ""},
-                    {name: "Dortmunder Export", description: ""},
-                    {name: "Doppelbock", description: ""},
-                    {name: "Dunkel", description: ""},
-                    {name: "Dunkelweizen", description: ""},
-                    {name: "Eisbock", description: ""},
-                    {name: "Fruit lambic", description: ""},
-                    {name: "Golden Ale", description: ""},
-                    {name: "Gose", description: ""},
-                    {name: "Gueuze", description: ""},
-                    {name: "Hefeweizen", description: ""},
-                    {name: "Helles", description: ""},
-                    {name: "India pale ale", description: ""},
-                    {name: "American IPA", description: ""},
-                    {name: "Imperial IPA", description: ""},
-                    {name: "Kölsch", description: ""},
-                    {name: "Lambic", description: ""},
-                    {name: "Light ale", description: ""},
-                    {name: "Maibock", description: ""},
-                    {name: "Helles bock", description: ""},
-                    {name: "Malt liquor", description: ""},
-                    {name: "Mild", description: ""},
-                    {name: "Oktoberfestbier", description: ""},
-                    {name: "Märzenbier", description: ""},
-                    {name: "Old ale", description: ""},
-                    {name: "Oud bruin", description: ""},
-                    {name: "Pale ale", description: ""},
-                    {name: "Pilsener/Pilsner/Pils", description: ""},
-                    {name: "Bohemian Pilsener", description: ""},
-                    {name: "Classic American Pilsner", description: ""},
-                    {name: "Porter", description: ""},
-                    {name: "Red ale", description: ""},
-                    {name: "Roggenbier", description: ""},
-                    {name: "Saison", description: ""},
-                    {name: "Scotch ale", description: ""},
-                    {name: "Steam beer", description: ""},
-                    {name: "Stout", description: ""},
-                    {name: "Oatmeal Stout", description: ""},
-                    {name: "Foreign Extra Stout", description: ""},
-                    {name: "American Stout", description: ""},
-                    {name: "Russian Imperial Stout", description: ""}
+                    {name: "Altbier", description: "Altbier (German for 'old beer') is a style of beer originating in Germany. It was first brewed in the historical region of Westphalia and is a speciality of the city of Düsseldorf. Its name comes from its production using the technique of top fermentation, an older method than bottom fermentation characteristic of lager styles of beer. Altbier is considered an ale."},
+                    {name: "Amber ale", description: "Amber ale is a term used in Australia, France and North America for pale ales brewed with a proportion of amber malt and sometimes crystal malt to produce an amber colour generally ranging from light copper to light brown."},
+                    {name: "Barley wine", description: "Barley wine (or barleywine) is a style of strong ale originating in England."},
+                    {name: "Berliner weisse", description: "Berliner Weisse (German: Berlin white; alternative German spelling, Berliner Weiße) is a cloudy, sour, wheat beer of around 3% abv. It is a regional beer from Northern Germany, mainly Berlin, dating back to the 16th century."},
+                    {name: "Bière de Garde", description: "Bière de Garde (\"beer for keeping\") is a strong pale ale or keeping beer traditionally brewed in the Nord-Pas-de-Calais region of France. These beers were originally brewed in farmhouses during the winter and spring, to avoid unpredictable problems with the yeast during the summertime. Farmhouse production is now supplemented by commercial production, although most Bière de Garde brewers are small businesses."},
+                    {name: "Bitter", description: "Bitter is an English term for pale ale. Bitters vary in colour from gold to dark amber and in strength from 3% to 7% alcohol by volume."},
+                    {name: "Blonde Ale", description: "Blonde ales are very pale in colour. The term \"Blonde\" for pale beers is popular in Europe and South America - particularly in France, Belgium, the UK, and Brazil - though the beers may not have much in common, other than colour. Blondes tend to be clear, crisp, and dry, with low-to-medium bitterness and aroma from hops, and some sweetness from malt."},
+                    {name: "Traditional bock", description: "Traditional bock is a sweet, relatively strong (6.3%–7.2% by volume), lightly hopped (20-27 IBUs) lager. The beer should be clear, and colour can range from light copper to brown, with a bountiful and persistent off-white head. The aroma should be malty and toasty, possibly with hints of alcohol, but no detectable hops or fruitiness."},
+                    {name: "Brown ale", description: "Brown ale is a style of beer with a dark amber or brown colour. The term was first used by London brewers in the late 17th century to describe their products, such as mild ale, though the term had a rather different meaning than it does today. 18th-century brown ales were lightly hopped and brewed from 100% brown malt."},
+                    // {name: "American Brown Ale", description: ""},
+                    {name: "California Common", description: "Historic steam beer, associated with San Francisco and the U.S. West Coast, was brewed with lager yeast without the use of true refrigeration (by ice or mechanical means). It was an improvised process, originating out of necessity, perhaps as early as the Gold Rush and at least 1860 in Nevada. It was considered a cheap and low-quality beer, as shown by references to it in literature of the 1890s and 1900s."},
+                    {name: "Cream Ale", description: "Cream ale is a style of American beer, of which examples are often light in color and are well attenuated. During Prohibition in the United States, Canadian brewers took up brewing cream ale, refining it to some degree. Following the end of Prohibition in the United States, cream ale from Canada became popular and the style was produced anew in both nations."},
+                    {name: "Dortmunder Export", description: "Dortmunder Export or Dortmunder is a pale lager that originated in the then industrial city of Dortmund in Germany. Originally brewed by Dortmunder Union in 1873, this soft textured beer, influenced by Pilsner lager being brewed in Pilsen, became very popular with industrial workers, and was responsible for Dortmunder Union becoming Germany's largest brewery and Dortmund having the highest concentration of breweries in Germany. With the decline of heavy industry in the area, the sales of Dortmunder also declined until, by 1994, the Dortmund Union brewery had shut down, and merged with several other Dortmund breweries to form Brinkhoff's Brewery."},
+                    {name: "Doppelbock", description: "Doppelbock or double bock is a stronger version of traditional bock that was first brewed in Munich by the Paulaner Friars, a Franciscan order founded by St. Francis of Paula. Historically, doppelbock was high in alcohol and sweet, thus serving as \"liquid bread\" for the Friars during times of fasting, when solid food was not permitted. Today, doppelbock is still strong—ranging from 7%–12% or more by volume. It is clear, with colour ranging from dark gold, for the paler version, to dark brown with ruby highlights for darker version. It has a large, creamy, persistent head."},
+                    {name: "Dunkel", description: "Dunkel, or Dunkles, is a word used for several types of dark German lager. Dunkel is the German word meaning dark, and dunkel beers typically range in colour from amber to dark reddish brown. They are characterized by their smooth malty flavour. In informal terms, such as when ordering at a bar, \"dunkel\" is likely to mean whatever dark beer the bar has on tap, or sells most of; in much of north and western Germany, especially near Düsseldorf, this may be altbier."},
+                    // {name: "Dunkelweizen", description: ""},
+                    {name: "Eisbock", description: "Eisbock is a traditional specialty beer of the Kulmbach district of Germany that is made by partially freezing a doppelbock and removing the water ice to concentrate the flavour and alcohol content, which ranges from 9% to 13% by volume. It is clear, with a colour ranging from deep copper to dark brown in colour, often with ruby highlights."},
+                    {name: "Fruit lambic", description: "Lambic with the addition of raspberry (framboise), peach (pêche), blackcurrant (cassis), grape (druif), or strawberry (aardbei), as either whole fruit or syrup. Other, rarer fruit lambic flavorings include apple (pomme), banana (banane), pineapple (ananas), apricot (abricotier), plum (prunier), cloudberry (plaquebière), lemon (citron), and blueberry (bleuet). Fruit lambics are usually bottled with secondary fermentation. Although fruit lambics are among the most famous Belgian fruit beers, the use of names such as kriek, framboise or frambozen, cassis, etc. does not necessarily imply that the beer is made from lambic."},
+                    {name: "Golden Ale", description: "A typical golden ale has an appearance and profile similar to that of a pale lager. Malt character is subdued and the hop profile ranges from spicy to citrus; common hops include Styrian Golding and Cascade. Alcohol is in the 4% to 5% abv range."},
+                    {name: "Gose", description: "Gose is a top-fermented beer that originated in Goslar, Germany. It is brewed with at least 50% of the grain bill being malted wheat."},
+                    {name: "Gueuze", description: "Gueuze (or Geuze) is a type of lambic, a Belgian beer. It is made by blending young (1-year-old) and old (2- to 3-year-old) lambics, which is then bottled for a second fermentation. Because the young lambics are not fully fermented, the blended beer contains fermentable sugars, which allow a second fermentation to occur. Lambic that undergoes a second fermentation in the presence of sour cherries before bottling results in kriek lambic, a beer closely related to gueuze."},
+                    {name: "Hefeweizen", description: "Hefeweizen (\"yeast wheat\") or Hefeweissbier refer to wheat beer in its traditional, unfiltered form."},
+                    {name: "Helles", description: "In 1894, the Spaten Brewery in Munich noticed the commercial success of the pale lagers Pilsner and Dortmunder Export; Spaten utilised the methods that Sedlmayr had brought home over 50 years earlier to produce their own pale lager they named helles, which is German for \"light coloured\", in order to distinguish it from the darker, sweeter beers from that region: dunkelbier or dunkles bier (\"dark beer\")."},
+                    {name: "India pale ale", description: "India Pale Ale (IPA) is a hoppy beer style within the broader category of pale ale. The first known use of the term \"India pale ale\" is an advertisement in the Sydney Gazette and New South Wales Advertiser in 1829."},
+                    // {name: "American IPA", description: ""},
+                    // {name: "Imperial IPA", description: ""},
+                    {name: "Kölsch", description: "Kölsch (transliterated as Koelsch) is a local specialty beer brewed in Cologne (Köln), Germany. It is clear with a bright, straw-yellow hue, has a prominent but not extreme hoppiness, and is less bitter than the standard German pale lager."},
+                    {name: "Lambic", description: "Lambic is a type of beer traditionally brewed in the Pajottenland region of Belgium (southwest of Brussels) and in Brussels itself at the Cantillon Brewery and museum. Lambic is now mainly consumed after refermentation, resulting in derived beers such as Gueuze or Kriek lambic."},
+                    {name: "Light ale", description: "Light ale is a low abv bitter, often bottled."},
+                    {name: "Maibock", description: "The maibock style, also known as helles bock or heller bock, is a helles lager brewed to bock strength, therefore still as strong as traditional bock, but lighter in colour and with more hop presence. It is a fairly recent development compared to other styles of bock beers, frequently associated with springtime and the month of May."},
+                    {name: "Malt liquor", description: "Malt liquor is a North American term referring to a type of beer with high alcohol content. In legal statutes, the term often includes any alcoholic beverage not lower than 5% alcohol by volume made with malted barley."},
+                    {name: "Mild", description: "Mild ale is a low-gravity beer with a predominantly malty palate that originated in Britain in the 17th century or earlier. Modern mild ales are mainly dark coloured with an abv of 3% to 3.6%, although there are lighter hued examples as well as stronger examples reaching 6% abv and higher."},
+                    {name: "Oktoberfestbier", description: "Oktoberfest is a German festival dating from 1810, and Oktoberfestbiers are the beers that have been served at the festival since 1818, and are supplied by six breweries: Spaten, Löwenbräu, Augustiner-Bräu, Hofbräu-München, Paulaner and Hacker-Pschorr."},
+                    // {name: "Märzenbier", description: ""},
+                    {name: "Old ale", description: "Old ale is a term commonly applied to dark, malty beers in England, generally above 5% abv, also to dark ales of any strength in Australia. Sometimes associated with stock ale or, archaically, keeping ale, in which the beer is held at the brewery."},
+                    {name: "Oud bruin", description: "Oud Bruin (Du: \"old brown\"), also known as Flanders Brown, is a style of beer originating from the Flemish region of Belgium. The Dutch name refers to the long aging process, up to a year. It undergoes a secondary fermentation, which takes several weeks to a month, and is followed by bottle aging for several more months. "},
+                    {name: "Pale ale", description: "Pale ale is a beer made by warm fermentation using predominantly pale malt. The higher proportion of pale malts results in a lighter colour. The term \"pale ale\" first appeared around 1703 for beers made from malts dried with coke, which resulted in a lighter colour than other beers popular at that time. Different brewing practices and hop levels have resulted in a range of taste and strength within the pale ale family."},
+                    {name: "Pilsener/ Pilsner/ Pils", description: "Pilsner (also pilsener, pilsen or simply pils) is a type of pale lager. It takes its name from the city of Plzeň, Bohemia, Czech Republic, where it was first produced in 1842. The original Pilsner Urquell beer is still produced there today."},
+                    // {name: "Bohemian Pilsener", description: ""},
+                    // {name: "Classic American Pilsner", description: ""},
+                    {name: "Porter", description: "Porter is a dark style of beer originating in London in the 18th century, descended from brown beer, a well-hopped beer made from brown malt. The name is thought to come from its popularity with street and river porters."},
+                    {name: "Irish Red ale", description: "Irish red ale, red ale, or Irish ale is a name used by brewers in Ireland; Smithwick's is a typical exampe of a commercial Irish Red Ale. There are many other examples being produced by Ireland's expanding craft beer industry. O'Hara's, 8 Degrees and Franciscan Well all brew examples of Irish Red Ale."},
+                    {name: "Roggenbier", description: "Until the 15th Century, it was common in Germany, particularly in Bavaria, to use rye malt for brewing beer. However, after a period of bad harvests, it was ruled that rye would only be used for baking bread, (thus only barley was to be used for beer, see the German law known as the Reinheitsgebot). Roggenbier virtually disappeared for almost five hundred years. In 1988, it reappeared in Bavaria."},
+                    {name: "Saison", description: "Saison (French, \"season,\"]) is a broadly defined pale ale that in modern versions is generally around 7% abv, highly carbonated, fruity, spicy (sometimes from the addition of spices), and is influenced by Saison Dupont Vieille Provision. As a beer style it originated from beers brewed during the cooler and less active months in farmhouses in Wallonia, the French-speaking region of Belgium, and then stored for drinking by the farm workers during the summer months."},
+                    {name: "Scotch ale", description: "Scotch ale is the Edinburgh version of Burton Ale: dark, with a bittersweet, sometimes slightly metallic tang, and generally strong. Scotch Ale was first used as a designation for strong ales exported from Edinburgh in the 18th century."},
+                    {name: "Steam beer", description: "Historic steam beer, associated with San Francisco and the U.S. West Coast, was brewed with lager yeast without the use of true refrigeration (by ice or mechanical means). It was an improvised process, originating out of necessity, perhaps as early as the Gold Rush and at least 1860 in Nevada. It was considered a cheap and low-quality beer[improper synthesis?], as shown by references to it in literature of the 1890s and 1900s."},
+                    //{name: "Oatmeal Stout", description: ""},
+                    //{name: "Foreign Extra Stout", description: ""},
+                    //{name: "American Stout", description: ""},
+                    //{name: "Russian Imperial Stout", description: ""}
+                    {name: "Stout", description: "Stout is a dark beer made using roasted malt or roasted barley, hops, water and yeast. Stouts were traditionally the generic term for the strongest or stoutest porters, typically 7% or 8%, produced by a brewery. There are a number of variations including Baltic porter, dry stout and imperial stout. The first known use of the word stout for beer was in a document dated 1677 found in the Egerton Manuscript, the sense being that a stout beer was a strong beer not a dark beer."}
                 ];
 
                 /**
@@ -116,29 +155,13 @@
                 return this.beerSelection.description;
             };
 
-            /**
-             * @type {HTMLElement}
-             */
-            var beerHeroName = document.getElementById('beer');
 
-            /**
-             * @type {HTMLElement}
-             */
+            var beerHeroName = document.getElementById('beer');
             var beerHeroDescription = document.getElementById('description');
 
-            /**
-             * @type {string}
-             */
             var beerCookieName = document.cookie.replace(/(?:(?:^|.*;\s*)beerName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-
-            /**
-             * @type {string}
-             */
             var beerCookieDescription = document.cookie.replace(/(?:(?:^|.*;\s*)beerDescription\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
-            /**
-             * check for a cookie before creating a new selection.
-             */
             if(beerCookieName){
                 beerHeroName.innerHTML = beerCookieName;
                 beerHeroDescription.innerHTML = beerCookieDescription;
@@ -151,6 +174,33 @@
                 beerHeroName.innerHTML = todaysBeer.beerName();
                 beerHeroDescription.innerHTML = todaysBeer.beerDescription();
             }
+
+            var newBeer = document.getElementById('tryAgain');
+            newBeer.addEventListener('click', function(){
+                var todaysBeer = new Beer();
+                beerHeroName.innerHTML = todaysBeer.beerName();
+                beerHeroDescription.innerHTML = todaysBeer.beerDescription();
+            });
+
+
+            if (window.DeviceOrientationEvent) {
+                var shake = document.getElementById('shake');
+                shake.innerHTML = "Or shake to change.";
+
+                window.addEventListener('devicemotion', function(event) {
+                    var threshold = "20";
+                    var x = event.accelerationIncludingGravity.x;
+                    var y = event.accelerationIncludingGravity.y;
+                    var z = event.accelerationIncludingGravity.z;
+
+                    if(x > threshold || y > threshold || z > threshold){
+                        var todaysBeer = new Beer();
+                        beerHeroName.innerHTML = todaysBeer.beerName();
+                        beerHeroDescription.innerHTML = todaysBeer.beerDescription();
+                    }
+                });
+            }
+
         })();
     </script>
   </body>
